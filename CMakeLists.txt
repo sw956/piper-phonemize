@@ -133,6 +133,10 @@ if (NOT DEFINED ONNXRUNTIME_DIR)
         set(ONNXRUNTIME_EXT "tgz")
     endif()
 
+    if(NOT DEFINED ONNXRUNTIME_URL)
+        set(ONNXRUNTIME_URL "https://github.com/microsoft/onnxruntime/releases/download/v${ONNXRUNTIME_VERSION}/${ONNXRUNTIME_PREFIX}.${ONNXRUNTIME_EXT}")
+    endif()
+
     set(ONNXRUNTIME_FILENAME "${ONNXRUNTIME_PREFIX}.${ONNXRUNTIME_EXT}")
     set(ONNXRUNTIME_DIR "${EXT_LIB_DIR}/${ONNXRUNTIME_PREFIX}")
 

@@ -1,2 +1,9 @@
 *.pyc
 .venv
+build/
+dist/
+piper_phonemize.egg-info/
+piper_phonemize/share/
+piper_phonemize/lib/
+piper_phonemize/include/
+piper_phonemize/bin/

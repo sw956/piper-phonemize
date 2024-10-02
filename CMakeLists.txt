@@ -10,6 +10,8 @@ project(
     LANGUAGES CXX
 )
 
+set(CMAKE_INSTALL_LIBDIR "lib")
+
 if(MSVC)
     # Force compiler to use UTF-8 for IPA constants
     add_compile_options("$<$<C_COMPILER_ID:MSVC>:/utf-8>")
@@ -48,46 +50,45 @@ endif()
 if(NOT EXISTS "${ESPEAK_NG_DIR}")
     message(FATAL_ERROR "${ESPEAK_NG_DIR} does not exist.")
 else()
-    if (FALSE)
-        include(ExternalProject)
-        ExternalProject_Add(
-            espeak_ng_external
-            PREFIX ${ESPEAK_NG_DIR}
-            URL "https://github.com/rhasspy/espeak-ng/archive/0f65aa301e0d6bae5e172cc74197d32a6182200f.zip"
-            CMAKE_ARGS -DCMAKE_INSTALL_PREFIX:PATH=${ESPEAK_NG_INSTALL_DIR}
-            CMAKE_ARGS -DUSE_ASYNC:BOOL=OFF
-            CMAKE_ARGS -DBUILD_SHARED_LIBS:BOOL=ON
-            CMAKE_ARGS -DUSE_MBROLA:BOOL=OFF
-            CMAKE_ARGS -DUSE_LIBSONIC:BOOL=OFF
-            CMAKE_ARGS -DUSE_LIBPCAUDIO:BOOL=OFF
-            CMAKE_ARGS -DUSE_KLATT:BOOL=OFF
-            CMAKE_ARGS -DUSE_SPEECHPLAYER:BOOL=OFF
-            CMAKE_ARGS -DEXTRA_cmn:BOOL=ON
-            CMAKE_ARGS -DEXTRA_ru:BOOL=ON
-            CMAKE_ARGS -DCMAKE_C_FLAGS="-D_FILE_OFFSET_BITS=64"
-            CMAKE_ARGS -DCMAKE_POSITION_INDEPENDENT_CODE:BOOL=ON
-        )
-        add_dependencies(piper_phonemize espeak_ng_external)
-    else()
-        include(ExternalProject)
-        ExternalProject_Add(
-            espeak_ng_external
-            SOURCE_DIR ${ESPEAK_NG_DIR}
-            CMAKE_ARGS -DCMAKE_INSTALL_PREFIX:PATH=${ESPEAK_NG_INSTALL_DIR}
-            CMAKE_ARGS -DUSE_ASYNC:BOOL=OFF
-            CMAKE_ARGS -DBUILD_SHARED_LIBS:BOOL=ON
-            CMAKE_ARGS -DUSE_MBROLA:BOOL=OFF
-            CMAKE_ARGS -DUSE_LIBSONIC:BOOL=OFF
-            CMAKE_ARGS -DUSE_LIBPCAUDIO:BOOL=OFF
-            CMAKE_ARGS -DUSE_KLATT:BOOL=OFF
-            CMAKE_ARGS -DUSE_SPEECHPLAYER:BOOL=OFF
-            CMAKE_ARGS -DEXTRA_cmn:BOOL=ON
-            CMAKE_ARGS -DEXTRA_ru:BOOL=ON
-            CMAKE_ARGS -DCMAKE_C_FLAGS="-D_FILE_OFFSET_BITS=64"
-            CMAKE_ARGS -DCMAKE_POSITION_INDEPENDENT_CODE:BOOL=ON
-        )
-        add_dependencies(piper_phonemize espeak_ng_external)
-    endif()
+    # --- orig:
+    # include(ExternalProject)
+    # ExternalProject_Add(
+    #     espeak_ng_external
+    #     PREFIX ${ESPEAK_NG_DIR}
+    #     URL "https://github.com/rhasspy/espeak-ng/archive/0f65aa301e0d6bae5e172cc74197d32a6182200f.zip"
+    #     CMAKE_ARGS -DCMAKE_INSTALL_PREFIX:PATH=${ESPEAK_NG_INSTALL_DIR}
+    #     CMAKE_ARGS -DUSE_ASYNC:BOOL=OFF
+    #     CMAKE_ARGS -DBUILD_SHARED_LIBS:BOOL=ON
+    #     CMAKE_ARGS -DUSE_MBROLA:BOOL=OFF
+    #     CMAKE_ARGS -DUSE_LIBSONIC:BOOL=OFF
+    #     CMAKE_ARGS -DUSE_LIBPCAUDIO:BOOL=OFF
+    #     CMAKE_ARGS -DUSE_KLATT:BOOL=OFF
+    #     CMAKE_ARGS -DUSE_SPEECHPLAYER:BOOL=OFF
+    #     CMAKE_ARGS -DEXTRA_cmn:BOOL=ON
+    #     CMAKE_ARGS -DEXTRA_ru:BOOL=ON
+    #     CMAKE_ARGS -DCMAKE_C_FLAGS="-D_FILE_OFFSET_BITS=64"
+    #     CMAKE_ARGS -DCMAKE_POSITION_INDEPENDENT_CODE:BOOL=ON
+    # )
+    # add_dependencies(piper_phonemize espeak_ng_external)
+
+    include(ExternalProject)
+    ExternalProject_Add(
+        espeak_ng_external
+        SOURCE_DIR ${ESPEAK_NG_DIR}
+        CMAKE_ARGS -DCMAKE_INSTALL_PREFIX:PATH=${ESPEAK_NG_INSTALL_DIR}
+        CMAKE_ARGS -DUSE_ASYNC:BOOL=OFF
+        CMAKE_ARGS -DBUILD_SHARED_LIBS:BOOL=ON
+        CMAKE_ARGS -DUSE_MBROLA:BOOL=OFF
+        CMAKE_ARGS -DUSE_LIBSONIC:BOOL=OFF
+        CMAKE_ARGS -DUSE_LIBPCAUDIO:BOOL=OFF
+        CMAKE_ARGS -DUSE_KLATT:BOOL=OFF
+        CMAKE_ARGS -DUSE_SPEECHPLAYER:BOOL=OFF
+        CMAKE_ARGS -DEXTRA_cmn:BOOL=ON
+        CMAKE_ARGS -DEXTRA_ru:BOOL=ON
+        CMAKE_ARGS -DCMAKE_C_FLAGS="-D_FILE_OFFSET_BITS=64"
+        CMAKE_ARGS -DCMAKE_POSITION_INDEPENDENT_CODE:BOOL=ON
+    )
+    add_dependencies(piper_phonemize espeak_ng_external)
 endif()
 
 # ---- onnxruntime ---
